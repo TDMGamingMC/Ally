@@ -52,7 +52,8 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 $task = new accept($this, $target);
                 array_push($target->getName(), $this->request);
 		 	$this->getServer()->getScheduler()->scheduleDelayedTask($task, 600);
-		 	$this->queue[$target->getName()][$sender->getName()]
+		 	//should this work?(below)
+		 $this->queue[$target->getName()]["Requester" => $sender->getName()];
 		 	return true;
             }
                 }else{
@@ -63,7 +64,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
  }
  if(strtolower($cmd->getName()) === "accept") {
  if(in_array($target->getName(),$this->request)){
- 	$sender->sendMessage("Request from ".$this->queue[$target->getName()][$sender->getName()]."Accepted!");
+ 	$sender->sendMessage("Request from ".$this->queue[$target->getName()]["Requester"]." Accepted!");
  	return true;
  }else{
  	$sender->sendMessage("You have no request!");
