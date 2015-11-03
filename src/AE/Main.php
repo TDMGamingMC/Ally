@@ -53,7 +53,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 array_push($target->getName(), $this->request);
 		 	$this->getServer()->getScheduler()->scheduleDelayedTask($task, 600);
 		 	//should this work?(below)
-		 $this->queue[$target->getName()]["Requester" => $sender->getName()];
+		$this->addQueue($target,$sender);
 		 	return true;
             }
                 }else{
@@ -71,6 +71,9 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
  	return false;
  }
 }
+}
+public function addQueue(Player $p1, Player $p2){
+	$this->queue[$p1->getName()]["Requester" => $p2];
 }
 }
 
