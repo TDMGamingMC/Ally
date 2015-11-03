@@ -73,7 +73,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
 }
 }
 public function addQueue(Player $p1, Player $p2){
-	$this->queue[$p1->getName()]["Requester" => $p2];
+	$this->queue[$p1->getName()]["Requester" => $p2->getName()];
 }
 }
 
