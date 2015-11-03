@@ -39,7 +39,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 $name = $args[0];
                 $target = $this->getServer()->getPlayer($name);
                 $this->TargetFile = new Config($this->getDataFolder()."Players/".$target->getName().".yml", Config::YAML);
-                $this->SenderFile = new Config($this->getDataFolder()."Players/".$sender->getName().".yml", Config::YAML);
+
                 
                 if($sender instanceof Player){
                 if($target === null){
@@ -47,7 +47,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 	return false;
                 }
                 if($target instanceof Player){
-                $sender->sendMessage("Ally request sent to".$target->getName());
+                $sender->sendMessage("Ally request sent to ".$target->getName());
                  $target->sendMessage($sender->getName()." Wants to be allys! please do /accept to accpet thier allyship request!");
               //not needed rn  $task = new accept($this, $target);
                 array_push($target->getName(), $this->request);
@@ -64,7 +64,11 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
  }
  if(strtolower($cmd->getName()) === "accept") {
  if(in_array($target->getName(),$this->request)){
+ 	$this->SenderFile = new Config($this->getDataFolder()."Players/".$this->queue[$target->getName()]["Requester"].".yml", Config::YAML);
  	$sender->sendMessage("Request from ".$this->queue[$target->getName()]["Requester"]." Accepted!");
+ 	$this->TargetFile->set($this->queue[$target->getName()]["Requester"],"True");
+ 	$this->SenderFile->set($target->getName(),"True");
+ 	
  	return true;
  }else{
  	$sender->sendMessage("You have no request!");
