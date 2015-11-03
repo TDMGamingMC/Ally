@@ -49,9 +49,9 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 if($target instanceof Player){
                 $sender->sendMessage("Ally request sent to".$target->getName());
                  $target->sendMessage($sender->getName()." Wants to be allys! please do /accept to accpet thier allyship request!");
-                $task = new accept($this, $target);
+              //not needed rn  $task = new accept($this, $target);
                 array_push($target->getName(), $this->request);
-		 	$this->getServer()->getScheduler()->scheduleDelayedTask($task, 600);
+		 //not needed rn	$this->getServer()->getScheduler()->scheduleDelayedTask($task, 600);
 		 	//should this work?(below)
 		$this->addQueue($target,$sender);
 		 	return true;
