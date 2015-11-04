@@ -38,7 +38,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
             if(isset($args[0]) && isset($args[1])){
                 $name = $args[0];
                 $target = $this->getServer()->getPlayer($name);
-                $this->TargetFile = new Config($this->getDataFolder()."Players/".$target->getName().".yml", Config::YAML);
+               
 
                 
                 if($sender instanceof Player){
@@ -54,6 +54,7 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
 		 //not needed rn	$this->getServer()->getScheduler()->scheduleDelayedTask($task, 600);
 		 	//should this work?(below)
 		$this->addQueue($target,$sender);
+		$this->addRequest($sender,$target);
 		 	return true;
             }
                 }else{
@@ -62,13 +63,13 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
                 }
                 }
  }
- if(strtolower($cmd->getName()) === "accept") {
- if(in_array($target->getName(),$this->request)){
- 	$this->SenderFile = new Config($this->getDataFolder()."Players/".$this->queue[$target->getName()]["Requester"].".yml", Config::YAML);
+ if(strtolower($cmd->getName()) === "accept"){
+ 	 $this->RequesterFile = new Config($this->getDataFolder()."Players/".$this->queue[$target->getName()]["Requester"].".yml", Config::YAML);
+ 	 $this->PlayerFile = new Config($this->getDataFolder()."Players/".$sender->getName().".yml", Config::YAML);
+ if(in_array($sender->getName(),$this->queue)){
  	$sender->sendMessage("Request from ".$this->queue[$target->getName()]["Requester"]." Accepted!");
- 	$this->TargetFile->set($this->queue[$target->getName()]["Requester"],"True");
- 	$this->SenderFile->set($target->getName(),"True");
- 	
+        $this->RequesterFile->set($sender->getName(),"True");
+        $this->PlayerFile->set($this->queue[$target->getName()]["Requester"],"True");
  	return true;
  }else{
  	$sender->sendMessage("You have no request!");
@@ -77,8 +78,16 @@ public function onCommand(CommandSender $sender, Command $cmd, $label, array $ar
 }
 }
 public function addQueue(Player $p1, Player $p2){
-	$this->queue[$p1->getName()]["Requester" => $p2->getName()];
+	$this->queue[$p1->getName()] = array(
+		"Requester" => $p2->getName());
 }
+
+public function addRequest(Player $p1, Player $p2){
+	$this->request = array(
+		"Sender" => $p1->getName(),
+		"Target" => $p2->getName());
+}
+
 }
 
             
