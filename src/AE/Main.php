@@ -35,12 +35,9 @@ public function onPlayerLogin(PlayerPreLoginEvent $event){
         
 public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
  if(strtolower($cmd->getName()) === "ally") {
-            if(isset($args[0]) && isset($args[1])){
+            if(isset($args[0])){
                 $name = $args[0];
                 $target = $this->getServer()->getPlayer($name);
-               
-
-                
                 if($sender instanceof Player){
                 if($target === null){
                 	$sender->sendMessage("that player is not online!");
